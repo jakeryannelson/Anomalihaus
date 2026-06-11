@@ -33,34 +33,77 @@ const PALETTE: {
 
 const FOUNDER_PIECE = getPiece("rebirth")!;
 
+/* Deterministic leaf field — palette tones drifting down behind the
+   opener. Pure CSS animation; hidden for prefers-reduced-motion. */
+const LEAVES: {
+  x: string;
+  dur: string;
+  delay: string;
+  sway: string;
+  c: string;
+  s: number;
+  o: number;
+}[] = [
+  { x: "4%", dur: "17s", delay: "0s", sway: "38px", c: "#C68B45", s: 1, o: 0.5 },
+  { x: "14%", dur: "21s", delay: "-9s", sway: "-30px", c: "#3F5436", s: 0.8, o: 0.45 },
+  { x: "26%", dur: "15s", delay: "-4s", sway: "26px", c: "#C2492F", s: 0.7, o: 0.4 },
+  { x: "38%", dur: "23s", delay: "-14s", sway: "-42px", c: "#C68B45", s: 0.9, o: 0.35 },
+  { x: "52%", dur: "18s", delay: "-2s", sway: "34px", c: "#4E626C", s: 0.8, o: 0.4 },
+  { x: "63%", dur: "16s", delay: "-11s", sway: "-24px", c: "#C2492F", s: 1, o: 0.45 },
+  { x: "74%", dur: "22s", delay: "-6s", sway: "40px", c: "#3F5436", s: 0.7, o: 0.4 },
+  { x: "85%", dur: "19s", delay: "-16s", sway: "-34px", c: "#C68B45", s: 0.85, o: 0.5 },
+  { x: "94%", dur: "24s", delay: "-8s", sway: "28px", c: "#9486AD", s: 0.75, o: 0.35 },
+];
+
 export default function About() {
   return (
     <>
-      <section className="section container">
-        <div className="section-head">
-          <div>
-            <p className="kicker">About</p>
-            <h1>A haus for anomalies.</h1>
-          </div>
+      <section className="about-hero">
+        <div className="leaves" aria-hidden="true">
+          {LEAVES.map((leaf, i) => (
+            <span
+              key={i}
+              className="leaf"
+              style={
+                {
+                  left: leaf.x,
+                  background: leaf.c,
+                  "--dur": leaf.dur,
+                  "--delay": leaf.delay,
+                  "--sway": leaf.sway,
+                  "--s": leaf.s,
+                  "--o": leaf.o,
+                } as React.CSSProperties
+              }
+            />
+          ))}
         </div>
-        <div className="split">
-          <p className="lede">
-            anomalihaus is an art collective built around one conviction: the
-            things that don&rsquo;t fit are the things worth keeping.
-          </p>
-          <div className="split-body">
-            <p>
-              We make original abstract works, dimensional wall pieces,
-              preserved moss, and objects for people who want their walls to
-              say something true. The work deals in transformation — ego
-              death, mourning, rebirth, the bridge between who you were and
-              who you&rsquo;re becoming.
-            </p>
-            <p>
-              The haus is in Atlanta, and it is built to grow: collaborators,
-              makers, photographers, and strays are welcome —{" "}
-              <Link href="/contact">write to us</Link>.
-            </p>
+        <div className="container section about-hero-inner">
+          <div className="split">
+            <div>
+              <p className="kicker">About</p>
+              <h1 style={{ marginTop: "var(--s-2)" }}>
+                A haus for anomalies.
+              </h1>
+            </div>
+            <div className="split-body">
+              <p className="lede">
+                anomalihaus is an art collective built around one conviction:
+                the things that don&rsquo;t fit are the things worth keeping.
+              </p>
+              <p>
+                We make original abstract works, dimensional wall pieces,
+                preserved moss, and objects for people who want their walls
+                to say something true. The work deals in transformation — ego
+                death, mourning, rebirth, the bridge between who you were and
+                who you&rsquo;re becoming.
+              </p>
+              <p>
+                The haus is in Atlanta, and it is built to grow:
+                collaborators, makers, photographers, and strays are welcome
+                — <Link href="/contact">write to us</Link>.
+              </p>
+            </div>
           </div>
         </div>
       </section>
