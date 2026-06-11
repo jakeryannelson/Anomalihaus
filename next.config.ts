@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.squarespace-cdn.com" },
       { protocol: "https", hostname: "static1.squarespace.com" },
+      // Hero photograph (Bryggen, Bergen) — Unsplash free license.
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
 };
