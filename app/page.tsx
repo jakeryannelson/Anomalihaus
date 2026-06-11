@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { COLLECTIONS, PIECES, formatPrice, getPiece } from "@/lib/catalog";
+import {
+  COLLECTIONS,
+  PIECES,
+  formatPrice,
+  getPiece,
+  type CollectionId,
+} from "@/lib/catalog";
 
 /* Hero photograph: Bryggen, Bergen — the colorful harbor houses the
    haus is named for. Via Unsplash (free license, hotlink intended). */
@@ -15,6 +21,19 @@ const FEATURED = ["the-ego-death", "the-bifrost-bridge", "the-invocation"]
 const COLLECTION_IDS = Object.keys(
   COLLECTIONS
 ) as (keyof typeof COLLECTIONS)[];
+
+const ORIGINALS = PIECES.filter((p) => p.original);
+
+/* Each collection fronted by one of its own pieces. */
+const COLLECTION_COVERS: Record<CollectionId, string> = {
+  "studio-nord": "light-in-the-labyrinth",
+  "cold-thread": "the-first-mark",
+  artefakter: "the-foundation",
+};
+
+function firstSentence(s: string): string {
+  return s.split(/(?<=\.)\s/)[0];
+}
 
 export default function Home() {
   return (
@@ -126,30 +145,84 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Collections */}
-      <section className="section container" aria-labelledby="collections">
+      {/* The originals — where the page closes the deal */}
+      <section className="section container" aria-labelledby="originals">
         <div className="section-head">
           <div>
-            <p className="kicker">Havn Goods</p>
-            <h2 id="collections">Three collections, one haus.</h2>
+            <p className="kicker">One of one</p>
+            <h2 id="originals">The originals.</h2>
           </div>
+          <p className="section-head-link muted">When one sells, it&rsquo;s gone.</p>
         </div>
-        <div className="collections">
-          {COLLECTION_IDS.map((id) => {
-            const c = COLLECTIONS[id];
-            const count = PIECES.filter((p) => p.collection === id).length;
-            return (
-              <Reveal key={id}>
-                <Link href={`/havn-goods?c=${id}`} className="collection-card">
-                  <h3>{c.name}</h3>
-                  <p className="work-kind">{c.line}</p>
-                  <p className="collection-count">
-                    {count > 0 ? `${count} pieces` : "Coming"}
-                  </p>
+        <ul className="work-grid">
+          {ORIGINALS.map((piece) => (
+            <Reveal as="li" key={piece.slug} className="original-card">
+              <span className="badge">One of one</span>
+              <Link href={`/havn-goods/${piece.slug}`} className="work-card">
+                <Image
+                  src={piece.image.src}
+                  alt={piece.image.alt}
+                  width={piece.image.width}
+                  height={piece.image.height}
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+                <div className="work-caption">
+                  <h3>{piece.name}</h3>
+                  <span className="work-price">
+                    {formatPrice(piece.basePriceCents)}
+                  </span>
+                </div>
+              </Link>
+              <p className="original-excerpt">{firstSentence(piece.note)}</p>
+              <div className="original-cta">
+                <Link
+                  href={`/havn-goods/${piece.slug}`}
+                  className="button button--quiet"
+                >
+                  See it up close
                 </Link>
-              </Reveal>
-            );
-          })}
+              </div>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
+      {/* Collections */}
+      <section className="invocation-band" aria-labelledby="collections">
+        <div className="section container">
+          <div className="section-head">
+            <div>
+              <p className="kicker">Havn Goods</p>
+              <h2 id="collections">Three collections, one haus.</h2>
+            </div>
+          </div>
+          <div className="collections">
+            {COLLECTION_IDS.map((id) => {
+              const c = COLLECTIONS[id];
+              const count = PIECES.filter((p) => p.collection === id).length;
+              const cover = getPiece(COLLECTION_COVERS[id]);
+              return (
+                <Reveal key={id}>
+                  <Link href={`/havn-goods?c=${id}`} className="collection-card">
+                    {cover && (
+                      <Image
+                        src={cover.image.src}
+                        alt={cover.image.alt}
+                        width={cover.image.width}
+                        height={cover.image.height}
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                      />
+                    )}
+                    <h3>{c.name}</h3>
+                    <p className="work-kind">{c.line}</p>
+                    <p className="collection-count">
+                      {count > 0 ? `${count} pieces` : "Coming"}
+                    </p>
+                  </Link>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
