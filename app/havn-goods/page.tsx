@@ -79,7 +79,10 @@ export default async function HavnGoods({
         <ul className="work-grid">
           {shown.map((piece) => (
             <Reveal as="li" key={piece.slug}>
-              <Link href={`/havn-goods/${piece.slug}`} className="work-card">
+              <Link
+                href={`/havn-goods/${piece.slug}`}
+                className={`work-card${piece.original ? " work-card--wide" : ""}`}
+              >
                 <Image
                   src={piece.image.src}
                   alt={piece.image.alt}
