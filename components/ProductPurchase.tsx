@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useCart } from "@/components/CartProvider";
 import {
   formatPrice,
   type Piece,
@@ -8,17 +10,19 @@ import {
 } from "@/lib/catalog";
 
 /**
- * Variant picker + "Throw In Cart". Client-side state only; the server
- * re-resolves the price from the catalog, so this component is cosmetic
- * where money is concerned.
+ * Variant picker + cart actions. Display prices are computed here for
+ * the UI only — the server re-resolves every price from the catalog,
+ * so nothing the browser sends can change what gets charged.
  */
 export default function ProductPurchase({ piece }: { piece: Piece }) {
   const groups: VariantGroup[] = piece.variants ?? [];
+  const { add } = useCart();
 
   const [selection, setSelection] = useState<Record<string, string>>(() =>
     Object.fromEntries(groups.map((g) => [g.id, g.options[0].id]))
   );
   const [status, setStatus] = useState<"idle" | "working" | "error">("idle");
+  const [added, setAdded] = useState(false);
   const [message, setMessage] = useState("");
 
   const priceCents = useMemo(() => {
@@ -30,14 +34,22 @@ export default function ProductPurchase({ piece }: { piece: Piece }) {
     return total;
   }, [piece, groups, selection]);
 
-  async function buy() {
+  function throwInCart() {
+    add(piece.slug, selection, 1);
+    setAdded(true);
+  }
+
+  async function buyNow() {
     setStatus("working");
     setMessage("");
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: piece.slug, selection }),
+        body: JSON.stringify({
+          via: "direct",
+          items: [{ slug: piece.slug, selection, quantity: 1 }],
+        }),
       });
       const data = (await res.json()) as { url?: string; error?: string };
       if (!res.ok || !data.url) {
@@ -67,9 +79,10 @@ export default function ProductPurchase({ piece }: { piece: Piece }) {
                   role="radio"
                   aria-checked={active}
                   className={`variant-option${active ? " is-active" : ""}`}
-                  onClick={() =>
-                    setSelection((s) => ({ ...s, [group.id]: opt.id }))
-                  }
+                  onClick={() => {
+                    setSelection((s) => ({ ...s, [group.id]: opt.id }));
+                    setAdded(false);
+                  }}
                 >
                   {opt.label}
                 </button>
@@ -81,15 +94,26 @@ export default function ProductPurchase({ piece }: { piece: Piece }) {
 
       <div className="purchase-row">
         <p className="purchase-price">{formatPrice(priceCents)}</p>
-        <button
-          type="button"
-          className="button"
-          onClick={buy}
-          disabled={status === "working"}
-        >
-          {status === "working" ? "One moment…" : "Throw In Cart"}
-        </button>
+        <div className="purchase-actions">
+          <button type="button" className="button" onClick={throwInCart}>
+            Throw In Cart
+          </button>
+          <button
+            type="button"
+            className="button button--quiet"
+            onClick={buyNow}
+            disabled={status === "working"}
+          >
+            {status === "working" ? "One moment…" : "Buy it now"}
+          </button>
+        </div>
       </div>
+
+      {added && (
+        <p className="purchase-added" role="status">
+          In the cart. <Link href="/cart">View cart →</Link>
+        </p>
+      )}
 
       {status === "error" && (
         <p className="purchase-error" role="alert">

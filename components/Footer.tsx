@@ -43,6 +43,7 @@ export default function Footer() {
             <nav className="footer-col" aria-label="Site">
               <p className="kicker">Haus</p>
               <Link href="/havn-goods">Havn Goods</Link>
+              <Link href="/artists">Artists</Link>
               <Link href="/about">About</Link>
               <Link href="/keep-us-going">Keep Us Going</Link>
               <Link href="/contact">Contact</Link>

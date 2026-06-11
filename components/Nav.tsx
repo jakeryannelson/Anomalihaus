@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CartLink from "@/components/CartLink";
 
 export default function Nav() {
   return (
@@ -12,6 +13,9 @@ export default function Nav() {
             <Link href="/havn-goods">Havn Goods</Link>
           </li>
           <li>
+            <Link href="/artists">Artists</Link>
+          </li>
+          <li>
             <Link href="/about">About</Link>
           </li>
           <li>
@@ -19,6 +23,9 @@ export default function Nav() {
           </li>
           <li>
             <Link href="/contact">Contact</Link>
+          </li>
+          <li>
+            <CartLink />
           </li>
         </ul>
       </nav>
