@@ -33,6 +33,34 @@ const PALETTE: {
 
 const FOUNDER_PIECE = getPiece("rebirth")!;
 
+/* "anomalihaus" in Elder Futhark — ᚨ ᚾ ᛟ ᛗ ᚨ ᛚ ᛁ ᚺ ᚨ ᚢ ᛊ.
+   Each glyph is drawn as bare strokes (runes are straight lines),
+   local coords centered on (0,0), ~30 units tall. */
+const RUNE_WHEEL: string[][] = [
+  // ᚨ ansuz — a (the anomaly: drawn in moss)
+  ["M0 -15 L0 15", "M0 -12 L11 -4", "M0 -2 L11 6"],
+  // ᚾ nauthiz — n
+  ["M0 -15 L0 15", "M-8 -6 L8 2"],
+  // ᛟ othala — o
+  ["M0 -14 L9 -5 L0 4 L-9 -5 Z", "M-8 14 L-2 6", "M8 14 L2 6"],
+  // ᛗ mannaz — m
+  ["M-8 -15 L-8 15", "M8 -15 L8 15", "M-8 -15 L8 -3", "M8 -15 L-8 -3"],
+  // ᚨ ansuz — a
+  ["M0 -15 L0 15", "M0 -12 L11 -4", "M0 -2 L11 6"],
+  // ᛚ laguz — l
+  ["M0 -15 L0 15", "M0 -15 L10 -5"],
+  // ᛁ isa — i
+  ["M0 -15 L0 15"],
+  // ᚺ hagalaz — h
+  ["M-8 -15 L-8 15", "M8 -15 L8 15", "M-8 -2 L8 -7"],
+  // ᚨ ansuz — a
+  ["M0 -15 L0 15", "M0 -12 L11 -4", "M0 -2 L11 6"],
+  // ᚢ uruz — u
+  ["M-8 15 L-8 -14", "M-8 -14 L8 -4", "M8 -4 L8 15"],
+  // ᛊ sowilo — s
+  ["M6 -15 L-4 -6 L6 2 L-4 11"],
+];
+
 /* Deterministic leaf field — palette tones drifting down behind the
    opener. Pure CSS animation; hidden for prefers-reduced-motion. */
 const LEAVES: {
@@ -87,43 +115,57 @@ export default function About() {
               </h1>
               <figure className="anomaly-figure">
                 <svg
-                  viewBox="0 0 400 220"
+                  viewBox="0 0 400 400"
                   xmlns="http://www.w3.org/2000/svg"
                   role="img"
-                  aria-label="A grid of identical gray dots with a single green rune among them — the anomaly"
+                  aria-label="A slowly turning wheel of eleven runes spelling anomalihaus — one rune in moss green"
                 >
-                  {/* 9 × 5 field of identical marks… */}
-                  {Array.from({ length: 45 }).map((_, i) => {
-                    const col = i % 9;
-                    const row = Math.floor(i / 9);
-                    // …except one.
-                    if (col === 5 && row === 2) return null;
-                    return (
-                      <circle
-                        key={i}
-                        cx={28 + col * 43}
-                        cy={26 + row * 42}
-                        r="4.5"
-                        fill="#4E626C"
-                        opacity="0.32"
-                      />
-                    );
-                  })}
-                  {/* The anomaly: ansuz, in moss, slightly off-axis. */}
-                  <g
-                    transform="rotate(-9 243 110)"
-                    stroke="#3F5436"
-                    strokeWidth="5"
-                    strokeLinecap="square"
-                    fill="none"
-                  >
-                    <path d="M236 92 L236 130" />
-                    <path d="M236 97 L254 110" />
-                    <path d="M236 112 L254 125" />
+                  <g className="rune-wheel-spin">
+                    {/* Two hairline rings hold the letters. */}
+                    <circle
+                      cx="200"
+                      cy="200"
+                      r="174"
+                      fill="none"
+                      stroke="#16181A"
+                      strokeOpacity="0.13"
+                    />
+                    <circle
+                      cx="200"
+                      cy="200"
+                      r="110"
+                      fill="none"
+                      stroke="#16181A"
+                      strokeOpacity="0.13"
+                    />
+                    {/* a-n-o-m-a-l-i-h-a-u-s in Elder Futhark. */}
+                    {RUNE_WHEEL.map((rune, i) => {
+                      const angle = (360 / RUNE_WHEEL.length) * i;
+                      const isAnomaly = i === 0;
+                      return (
+                        <g key={i} transform={`rotate(${angle} 200 200)`}>
+                          <g
+                            transform="translate(200 58)"
+                            stroke={isAnomaly ? "#3F5436" : "#16181A"}
+                            strokeOpacity={isAnomaly ? "1" : "0.42"}
+                            strokeWidth={isAnomaly ? "4.5" : "4"}
+                            strokeLinecap="square"
+                            fill="none"
+                          >
+                            {rune.map((d, j) => (
+                              <path key={j} d={d} />
+                            ))}
+                          </g>
+                        </g>
+                      );
+                    })}
                   </g>
+                  {/* The still point at the center. */}
+                  <circle cx="200" cy="200" r="3.5" fill="#3F5436" />
                 </svg>
                 <figcaption className="anomaly-caption">
-                  The anomaly is the point.
+                  anomalihaus, in the old letters. One rune runs moss — the
+                  anomaly is the point.
                 </figcaption>
               </figure>
             </div>
