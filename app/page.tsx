@@ -3,121 +3,145 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { COLLECTIONS, PIECES, formatPrice, getPiece } from "@/lib/catalog";
 
-const HERO = getPiece("the-foundation")!;
+/* Hero photograph: Bryggen, Bergen — the colorful harbor houses the
+   haus is named for. Via Unsplash (free license, hotlink intended). */
+const HERO_PHOTO =
+  "https://images.unsplash.com/photo-1574931635935-049c8814c881?q=80&w=2400&auto=format&fit=crop";
+
 const FEATURED = ["the-ego-death", "the-bifrost-bridge", "the-invocation"]
   .map(getPiece)
   .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
+const COLLECTION_IDS = Object.keys(
+  COLLECTIONS
+) as (keyof typeof COLLECTIONS)[];
+
 export default function Home() {
   return (
     <>
-      {/* The hero is the work itself — no stock Norway, no slogan slide. */}
-      <section className="hero" aria-label="anomalihaus">
-        <div className="hero-media">
-          <Image
-            src={HERO.image.src}
-            alt={HERO.image.alt}
-            fill
-            priority
-            sizes="100vw"
-          />
-          <p className="hero-title" aria-hidden="true">
-            anomalihaus
-          </p>
+      {/* Full-bleed Nordic harbor, wordmark in bone on the water,
+          left-aligned to the same edge as everything below it. */}
+      <section className="hero-media" aria-label="anomalihaus">
+        <Image
+          src={HERO_PHOTO}
+          alt="Bryggen in Bergen, Norway — a row of colorful wooden harbor houses reflected in still water beneath an autumn hillside"
+          fill
+          priority
+          sizes="100vw"
+        />
+        <div className="hero-mark container">
+          <p className="kicker">Atlanta art collective · named for the north</p>
+          <p aria-hidden="true">anomalihaus</p>
         </div>
-        <div className="container hero-under">
-          <div className="hero-grid">
-            <h1 className="hero-statement">
-              A haus for the work that doesn&rsquo;t fit.
-            </h1>
-            <div className="hero-aside">
-              <p className="muted">
-                Original abstract works, dimensional wall pieces, preserved
-                moss, and objects made for individual expression. An art
-                collective, built in Atlanta.
-              </p>
+      </section>
+
+      {/* Thesis + action rail */}
+      <section className="hero-under container">
+        <div className="hero-grid">
+          <h1 className="hero-statement">
+            A haus for the work that doesn&rsquo;t fit.
+          </h1>
+          <div className="hero-aside">
+            <p className="muted">
+              Original abstract works, rune-marked drawings, and living moss
+              pieces. Every piece is made once, named once, and sent out with
+              its story.
+            </p>
+            <div className="hero-ctas">
               <Link href="/havn-goods" className="button">
                 See Havn Goods
               </Link>
+              <Link href="/havn-goods?c=artefakter" className="button button--quiet">
+                Own an original
+              </Link>
             </div>
+            <p className="price-anchor">
+              Originals from $700 · Prints from $50
+            </p>
           </div>
         </div>
       </section>
 
+      {/* Trust strip */}
+      <div className="trust">
+        <div className="container trust-inner">
+          <p className="trust-item">One-of-one originals</p>
+          <p className="trust-item">Made in Atlanta, Georgia</p>
+          <p className="trust-item">Secure checkout via Stripe</p>
+        </div>
+      </div>
+
       {/* Featured pieces */}
       <section className="section container" aria-labelledby="featured">
-        <div className="stack" style={{ marginBottom: "var(--s-5)" }}>
-          <p className="kicker">Featured pieces</p>
-          <h2 id="featured">Three doors in.</h2>
+        <div className="section-head">
+          <div>
+            <p className="kicker">Featured pieces</p>
+            <h2 id="featured">Three doors in.</h2>
+          </div>
+          <Link href="/havn-goods" className="section-head-link">
+            All nine pieces →
+          </Link>
         </div>
-        <ul className="work-grid">
+        <ul className="work-grid work-grid--three">
           {FEATURED.map((piece) => (
             <Reveal as="li" key={piece.slug}>
-              <Link
-                href={`/havn-goods/${piece.slug}`}
-                className="work-card"
-              >
-                <figure>
-                  <Image
-                    src={piece.image.src}
-                    alt={piece.image.alt}
-                    width={piece.image.width}
-                    height={piece.image.height}
-                    sizes="(max-width: 760px) 100vw, 50vw"
-                  />
-                  <figcaption>
-                    <h3>{piece.name}</h3>
-                    <span className="work-price">
-                      {piece.original ? "" : "from "}
-                      {formatPrice(piece.basePriceCents)}
-                    </span>
-                  </figcaption>
-                  <p className="work-kind">{piece.kind}</p>
-                </figure>
+              <Link href={`/havn-goods/${piece.slug}`} className="work-card">
+                <Image
+                  src={piece.image.src}
+                  alt={piece.image.alt}
+                  width={piece.image.width}
+                  height={piece.image.height}
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                />
+                <div className="work-caption">
+                  <h3>{piece.name}</h3>
+                  <span className="work-price">
+                    {piece.original ? "" : "from "}
+                    {formatPrice(piece.basePriceCents)}
+                  </span>
+                </div>
+                <p className="work-kind">{piece.kind}</p>
               </Link>
             </Reveal>
           ))}
         </ul>
       </section>
 
-      <div className="container">
-        <hr className="rule" />
-      </div>
+      {/* His words, set huge */}
+      <section className="invocation-band" aria-label="From The Ego Death">
+        <div className="container section">
+          <Reveal>
+            <blockquote>
+              &ldquo;To find the light, you must first become comfortable in
+              the fire that burns the ego away.&rdquo;
+              <cite>
+                — from{" "}
+                <Link href="/havn-goods/the-ego-death">The Ego Death</Link>,
+                prints from $70
+              </cite>
+            </blockquote>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Collections */}
       <section className="section container" aria-labelledby="collections">
-        <div className="stack" style={{ marginBottom: "var(--s-5)" }}>
-          <p className="kicker">Havn Goods</p>
-          <h2 id="collections">Three collections, one haus.</h2>
+        <div className="section-head">
+          <div>
+            <p className="kicker">Havn Goods</p>
+            <h2 id="collections">Three collections, one haus.</h2>
+          </div>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gap: "var(--s-4)",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          }}
-        >
-          {(
-            Object.entries(COLLECTIONS) as [
-              keyof typeof COLLECTIONS,
-              (typeof COLLECTIONS)[keyof typeof COLLECTIONS],
-            ][]
-          ).map(([id, c]) => {
+        <div className="collections">
+          {COLLECTION_IDS.map((id) => {
+            const c = COLLECTIONS[id];
             const count = PIECES.filter((p) => p.collection === id).length;
             return (
               <Reveal key={id}>
-                <Link
-                  href={`/havn-goods?c=${id}`}
-                  className="work-card"
-                  style={{
-                    borderTop: "1px solid var(--hairline)",
-                    paddingTop: "var(--s-2)",
-                    display: "block",
-                  }}
-                >
+                <Link href={`/havn-goods?c=${id}`} className="collection-card">
                   <h3>{c.name}</h3>
                   <p className="work-kind">{c.line}</p>
-                  <p className="small muted" style={{ marginTop: "var(--s-1)" }}>
+                  <p className="collection-count">
                     {count > 0 ? `${count} pieces` : "Coming"}
                   </p>
                 </Link>
@@ -127,20 +151,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quiet support band */}
-      <section className="section container" aria-labelledby="support">
+      {/* The practice — why this is worth owning */}
+      <section className="section container" aria-labelledby="practice">
         <Reveal>
-          <div className="stack">
-            <h2 id="support" style={{ maxWidth: "18ch" }}>
-              Independent, on purpose.
-            </h2>
-            <p className="muted">
-              No gallery, no grants, no investors. The work is funded by the
-              people who want it to exist.
-            </p>
-            <Link href="/keep-us-going" className="button button--quiet">
-              Keep Us Going
-            </Link>
+          <div className="split">
+            <div>
+              <p className="kicker">The practice</p>
+              <h2 id="practice" style={{ marginTop: "var(--s-2)" }}>
+                Marks first. Shop later.
+              </h2>
+            </div>
+            <div className="split-body">
+              <p>
+                Nothing here started as a product. Each piece began as
+                something that had to get out — an ego death, a mourning, a
+                bridge to whoever comes next. The names are Norse because the
+                north knows long winters and what follows them.
+              </p>
+              <p>
+                When a piece leaves the studio, its story goes with it.
+                You&rsquo;re not decorating a wall. You&rsquo;re keeping a
+                record of someone&rsquo;s becoming — and maybe starting your
+                own.
+              </p>
+              <Link href="/havn-goods" className="button">
+                Find your piece
+              </Link>
+            </div>
           </div>
         </Reveal>
       </section>

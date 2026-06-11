@@ -1,29 +1,20 @@
 /* ============================================================
-   anomalihaus — design system
-   Scandinavian editorial: warm paper, near-black ink, one fjord,
-   one moss. Typography does the work; whitespace is a material.
+   anomalihaus — design system v2
+   Scandinavian editorial on a strict grid. One container, one
+   left edge, uniform rows. Warm paper, near-black ink, one
+   fjord, one moss. Typography does the selling.
    ============================================================ */
 
 :root {
-  /* ── Color ──────────────────────────────────────────────────
-     bone   warm paper ground — gallery wall, not screen-white
-     ink    near-black with a cool cast — never #000
-     fjord  the old site's slate blue, demoted from background
-            to supporting voice: captions, rules, secondary text
-     moss   from Seeds of Life and the vines in The Fertile Ashes:
-            links, actions, focus. The only loud thing here.    */
+  /* ── Color ── */
   --bone: #faf8f4;
+  --bone-deep: #f1ede6;
   --ink: #16181a;
   --fjord: #4e626c;
   --moss: #3f5436;
-
   --hairline: color-mix(in srgb, var(--ink) 13%, transparent);
-  --bone-deep: #f1ede6; /* recessed panels: FAQ, footer */
 
-  /* ── Type ──────────────────────────────────────────────────
-     Fraunces carries the display voice (slightly strange, like
-     the name). Schibsted Grotesk carries the reading voice.
-     Fluid scale, ratio ≈ 1.25, anchored at 17–19px body.      */
+  /* ── Type — fluid scale, ratio ≈1.25, body 17–19px ── */
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
   --font-text: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
 
@@ -31,11 +22,11 @@
   --text-s: 0.9375rem;
   --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --text-h3: clamp(1.25rem, 1.1rem + 0.8vw, 1.625rem);
-  --text-h2: clamp(1.625rem, 1.35rem + 1.4vw, 2.375rem);
-  --text-h1: clamp(2.25rem, 1.7rem + 2.8vw, 4rem);
-  --text-hero: clamp(2.75rem, 1.5rem + 7vw, 7.5rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);
+  --text-h1: clamp(2.5rem, 1.8rem + 3.4vw, 4.75rem);
+  --text-hero: clamp(3rem, 1.5rem + 8vw, 8.5rem);
 
-  /* ── Space ── 8px base, sections breathe ── */
+  /* ── Space — 8px base ── */
   --s-1: 0.5rem;
   --s-2: 1rem;
   --s-3: 1.5rem;
@@ -43,8 +34,9 @@
   --s-5: 3rem;
   --s-6: 4.5rem;
   --s-7: 6rem;
-  --section: clamp(4rem, 9vw, 8rem);
+  --section: clamp(4.5rem, 9vw, 8rem);
 
+  /* ── The grid. Every page hangs off these two numbers. ── */
   --container: 1200px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --radius: 2px;
@@ -101,13 +93,12 @@ a:hover {
   color: var(--bone);
 }
 
-/* ── Typography ── */
 h1,
 h2,
 h3 {
   font-family: var(--font-display);
   font-weight: 480;
-  line-height: 1.08;
+  line-height: 1.06;
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
@@ -129,7 +120,6 @@ p {
 }
 
 .kicker {
-  font-family: var(--font-text);
   font-size: var(--text-xs);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -140,7 +130,7 @@ p {
 .lede {
   font-size: var(--text-h3);
   line-height: 1.45;
-  font-weight: 380;
+  font-weight: 400;
 }
 
 .muted {
@@ -171,22 +161,44 @@ p {
   margin-top: var(--s-3);
 }
 
-/* ── Nav — a name and four words. Nothing else earned a place. ── */
+/* Standard section header: kicker + title left, optional action
+   right, all on one shared baseline. Used identically everywhere
+   so every page opens the same way. */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+
+.section-head .kicker {
+  display: block;
+  margin-bottom: var(--s-2);
+}
+
+.section-head-link {
+  font-size: var(--text-s);
+  white-space: nowrap;
+  padding-bottom: 0.35em;
+}
+
+/* ── Nav ── */
 .nav {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: color-mix(in srgb, var(--bone) 92%, transparent);
+  background: color-mix(in srgb, var(--bone) 96%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--hairline);
 }
 
 .nav-inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-  padding-block: var(--s-2);
+  min-height: 3.5rem;
 }
 
 .wordmark {
@@ -204,7 +216,8 @@ p {
 .nav-links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s-2) var(--s-3);
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
   list-style: none;
   padding: 0;
   font-size: var(--text-s);
@@ -219,10 +232,10 @@ p {
   text-decoration-color: var(--moss);
 }
 
-/* ── Buttons — flat ink, inverts on hover. No shadows, ever. ── */
+/* ── Buttons ── */
 .button {
   display: inline-block;
-  padding: 0.8em 1.6em;
+  padding: 0.85em 1.7em;
   background: var(--ink);
   color: var(--bone);
   border: 1px solid var(--ink);
@@ -254,18 +267,16 @@ p {
 
 .button--quiet:hover {
   border-color: var(--ink);
+  background: transparent;
 }
 
-/* ── Hero — the one place the grid breaks on purpose:
-       an oversized wordmark laid across the artwork itself. ── */
-.hero {
-  position: relative;
-  border-bottom: 1px solid var(--hairline);
-}
-
+/* ── Hero — full-bleed photograph, wordmark set in bone over the
+       dark water, aligned to the container's left edge like
+       everything else on the site. ── */
 .hero-media {
   position: relative;
-  height: min(78vh, 760px);
+  height: min(74vh, 720px);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .hero-media img {
@@ -274,38 +285,45 @@ p {
   object-fit: cover;
 }
 
-/* The wordmark deliberately bridges the artwork and the page —
-   half on the image, half on the paper. The one planned breach. */
-.hero-title {
+.hero-mark {
   position: absolute;
   inset-inline: 0;
-  bottom: -0.45em;
+  bottom: clamp(1rem, 4vh, 2.5rem);
+  pointer-events: none;
+}
+
+.hero-mark p {
+  max-width: none;
   font-family: var(--font-display);
   font-size: var(--text-hero);
   font-weight: 560;
   letter-spacing: -0.03em;
-  line-height: 1;
-  text-align: center;
-  color: var(--ink);
-  pointer-events: none;
+  line-height: 0.95;
+  color: var(--bone);
 }
 
+.hero-mark .kicker {
+  color: color-mix(in srgb, var(--bone) 85%, transparent);
+  margin-bottom: var(--s-1);
+}
+
+/* Statement row under the hero: thesis left, action rail right. */
 .hero-under {
-  padding-block: var(--s-6) var(--s-7);
+  padding-block: var(--s-6);
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--s-5);
-  align-items: end;
+  gap: var(--s-3) var(--s-6);
+  align-items: start;
 }
 
 .hero-statement {
   font-family: var(--font-display);
   font-size: var(--text-h1);
   font-weight: 460;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.015em;
 }
 
@@ -313,24 +331,54 @@ p {
   display: grid;
   gap: var(--s-3);
   justify-items: start;
+  padding-top: 0.5em;
 }
 
-/* ── Shop grid — two columns, staggered like pieces leaned
-       against a studio wall, not a product shelf. ── */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  align-items: center;
+}
+
+.price-anchor {
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+/* Trust strip: three facts, one row, hairlines top and bottom. */
+.trust {
+  border-block: 1px solid var(--hairline);
+}
+
+.trust-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+  padding-block: var(--s-3);
+}
+
+.trust-item {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fjord);
+}
+
+/* ── Work grids — strict and uniform. Cards align top, captions
+       share an identical structure, no transforms, no stagger. ── */
 .work-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-7) var(--s-5);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6) var(--s-5);
   list-style: none;
   padding: 0;
 }
 
-.work-grid > li:nth-child(even) {
-  transform: translateY(var(--s-6));
-}
-
-.work-grid:has(> li:nth-child(even)) {
-  padding-bottom: var(--s-6);
+.work-grid--three {
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-5) var(--s-4);
 }
 
 .work-card {
@@ -338,31 +386,30 @@ p {
   text-decoration: none;
 }
 
-.work-card figure {
-  background: var(--bone-deep);
-  border: 1px solid var(--hairline);
-}
-
 .work-card img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+  border: 1px solid var(--hairline);
+  background: var(--bone-deep);
   transition: opacity 240ms ease-out;
 }
 
 .work-card:hover img {
-  opacity: 0.93;
+  opacity: 0.92;
 }
 
-.work-card figcaption {
+.work-caption {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: var(--s-2);
   padding-top: var(--s-2);
+  margin-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
 }
 
-.work-card h3 {
+.work-caption h3 {
   font-size: var(--text-h3);
   font-weight: 500;
 }
@@ -374,7 +421,7 @@ p {
 }
 
 .work-kind {
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
   font-size: var(--text-s);
   color: var(--fjord);
 }
@@ -384,16 +431,19 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-2) var(--s-3);
-  padding: 0;
+  padding: 0 0 var(--s-2);
+  margin-bottom: var(--s-5);
   list-style: none;
   font-size: var(--text-s);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .collection-nav a {
   text-decoration: none;
   color: var(--fjord);
-  padding-bottom: 0.2em;
-  border-bottom: 1px solid transparent;
+  padding-bottom: var(--s-2);
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
 }
 
 .collection-nav a:hover {
@@ -407,12 +457,98 @@ p {
 
 .empty-state {
   padding-block: var(--s-6);
-  border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
 }
 
-/* ── Product page — image breaks out of the grid to the left;
-       the words keep to their column. Asymmetry with intent. ── */
+/* Collections row (home) */
+.collections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+}
+
+.collection-card {
+  display: block;
+  text-decoration: none;
+  border-top: 1px solid var(--ink);
+  padding-top: var(--s-2);
+}
+
+.collection-card h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+
+.collection-card h3::after {
+  content: "→";
+  font-family: var(--font-text);
+  font-size: var(--text-s);
+  color: var(--fjord);
+  transition: color 160ms ease-out;
+}
+
+.collection-card:hover h3::after {
+  color: var(--moss);
+}
+
+.collection-count {
+  margin-top: var(--s-1);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fjord);
+}
+
+/* ── Pull-quote band — his words, set huge. ── */
+.invocation-band {
+  background: var(--bone-deep);
+  border-block: 1px solid var(--hairline);
+}
+
+.invocation-band blockquote {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 440;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.invocation-band cite {
+  display: block;
+  margin-top: var(--s-3);
+  font-family: var(--font-text);
+  font-style: normal;
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+/* ── Two-column prose band (the practice / support) ── */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-4) var(--s-7);
+  align-items: start;
+}
+
+.split-body {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+/* ── Product page ── */
+.crumbs {
+  margin-bottom: var(--s-4);
+}
+
+.crumbs a {
+  text-decoration: none;
+}
+
 .product {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -420,26 +556,66 @@ p {
   align-items: start;
 }
 
-.product-media {
-  margin-left: calc(var(--gutter) * -1);
-}
-
 .product-media img {
   width: 100%;
   border: 1px solid var(--hairline);
+  background: var(--bone-deep);
 }
 
 .product-details {
   position: sticky;
-  top: calc(var(--s-6) + 1rem);
+  top: 5.5rem;
   display: grid;
-  gap: var(--s-3);
+  gap: var(--s-4);
 }
 
-.product-note {
+.product-title {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.invocation {
   border-left: 2px solid var(--moss);
   padding-left: var(--s-3);
-  color: color-mix(in srgb, var(--ink) 88%, var(--fjord));
+  display: grid;
+  gap: var(--s-1);
+}
+
+.invocation .kicker {
+  font-size: 0.6875rem;
+}
+
+.invocation p {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 440;
+  line-height: 1.35;
+}
+
+/* Facts: definition rows with hairlines — quiet, factual, aligned. */
+.facts {
+  display: grid;
+}
+
+.facts > div {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--s-2);
+  padding-block: var(--s-2);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-s);
+}
+
+.facts dt {
+  color: var(--fjord);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: var(--text-xs);
+  padding-top: 0.15em;
+}
+
+.facts dd {
+  margin: 0;
 }
 
 /* Purchase UI */
@@ -498,8 +674,8 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-  padding-top: var(--s-2);
-  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--ink);
 }
 
 .purchase-price {
@@ -572,8 +748,6 @@ p {
 
 /* ── FAQ ── */
 .faq {
-  display: grid;
-  gap: 0;
   border-top: 1px solid var(--hairline);
 }
 
@@ -614,31 +788,74 @@ p {
   color: color-mix(in srgb, var(--ink) 85%, var(--fjord));
 }
 
-/* ── Footer — a year and a name, as promised. ── */
-.footer {
-  margin-top: var(--section);
+/* ── Footer — CTA band, then a three-column grid on the same
+       container as everything above it. ── */
+.footer-cta {
   border-top: 1px solid var(--hairline);
   background: var(--bone-deep);
 }
 
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-2) var(--s-4);
-  padding-block: var(--s-4);
+.footer-cta-inner {
+  padding-block: var(--s-7);
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.footer-cta h2 {
+  font-size: var(--text-h1);
+  max-width: 16ch;
+}
+
+.footer {
+  border-top: 1px solid var(--hairline);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr);
+  gap: var(--s-4);
+  padding-block: var(--s-6);
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+}
+
+.footer-col {
+  display: grid;
+  gap: var(--s-1);
+  align-content: start;
   font-size: var(--text-s);
+}
+
+.footer-col .kicker {
+  margin-bottom: var(--s-1);
+}
+
+.footer-col a {
+  text-decoration: none;
+  width: fit-content;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--moss);
+}
+
+.footer-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding-block: var(--s-3);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-xs);
   color: var(--fjord);
 }
 
-.footer-name {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  color: var(--ink);
-}
-
-/* ── Reveal — fade in once, 12px rise, 320ms. Nothing performative. ── */
+/* ── Reveal ── */
 .reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -666,41 +883,53 @@ p {
   }
 }
 
-/* ── Mobile — same consideration, one column. ── */
-@media (max-width: 760px) {
-  .hero-grid,
-  .product {
-    grid-template-columns: 1fr;
+/* ── Mobile ── */
+@media (max-width: 880px) {
+  .work-grid--three,
+  .collections {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .product-media {
-    margin-right: calc(var(--gutter) * -1);
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-media {
+    height: 58vh;
+  }
+
+  .hero-grid,
+  .product,
+  .split {
+    grid-template-columns: 1fr;
   }
 
   .product-details {
     position: static;
   }
 
-  .work-grid {
+  .work-grid,
+  .work-grid--three,
+  .collections,
+  .footer-grid {
     grid-template-columns: 1fr;
-    gap: var(--s-6);
   }
 
-  .work-grid > li:nth-child(even) {
-    transform: none;
+  .trust-inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
   }
 
-  .work-grid:has(> li:nth-child(even)) {
-    padding-bottom: 0;
-  }
-
-  .hero-media {
-    height: 56vh;
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-2);
   }
 
   .nav-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-1);
+    flex-wrap: wrap;
+    padding-block: var(--s-2);
   }
 }
