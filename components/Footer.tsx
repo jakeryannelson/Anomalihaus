@@ -4,6 +4,14 @@ export default function Footer() {
   return (
     <>
       <section className="footer-cta" aria-labelledby="footer-cta-h">
+        {/* The colors we keep — flat, six across, edge to edge. */}
+        <div className="palette-stripe" aria-hidden="true">
+          {["#2E5FA3", "#C2492F", "#3F5436", "#9486AD", "#C68B45", "#4E626C"].map(
+            (c) => (
+              <span key={c} style={{ background: c }} />
+            )
+          )}
+        </div>
         <div className="container footer-cta-inner">
           <svg
             className="footer-rune"
