@@ -31,16 +31,22 @@ export default async function HavnGoods({
     : null;
 
   const shown = active ? piecesIn(active) : PIECES;
+  const originals = shown.filter((p) => p.original).length;
 
   return (
     <section className="section container">
-      <div className="stack" style={{ marginBottom: "var(--s-5)" }}>
-        <p className="kicker">The shop</p>
-        <h1>Havn Goods</h1>
-        {active && <p className="muted">{COLLECTIONS[active].line}</p>}
+      <div className="section-head">
+        <div>
+          <p className="kicker">The shop</p>
+          <h1>Havn Goods</h1>
+        </div>
+        <p className="section-head-link muted">
+          {shown.length} {shown.length === 1 ? "piece" : "pieces"}
+          {originals > 0 ? ` · ${originals} one-of-one` : ""}
+        </p>
       </div>
 
-      <ul className="collection-nav" style={{ marginBottom: "var(--s-5)" }}>
+      <ul className="collection-nav">
         <li>
           <Link href="/havn-goods" aria-current={active === null}>
             All
@@ -54,6 +60,8 @@ export default async function HavnGoods({
           </li>
         ))}
       </ul>
+
+      {active && <p className="muted" style={{ marginBottom: "var(--s-5)" }}>{COLLECTIONS[active].line}</p>}
 
       {shown.length === 0 ? (
         <div className="empty-state stack">
@@ -72,23 +80,21 @@ export default async function HavnGoods({
           {shown.map((piece) => (
             <Reveal as="li" key={piece.slug}>
               <Link href={`/havn-goods/${piece.slug}`} className="work-card">
-                <figure>
-                  <Image
-                    src={piece.image.src}
-                    alt={piece.image.alt}
-                    width={piece.image.width}
-                    height={piece.image.height}
-                    sizes="(max-width: 760px) 100vw, 50vw"
-                  />
-                  <figcaption>
-                    <h3>{piece.name}</h3>
-                    <span className="work-price">
-                      {piece.original ? "" : "from "}
-                      {formatPrice(piece.basePriceCents)}
-                    </span>
-                  </figcaption>
-                  <p className="work-kind">{piece.kind}</p>
-                </figure>
+                <Image
+                  src={piece.image.src}
+                  alt={piece.image.alt}
+                  width={piece.image.width}
+                  height={piece.image.height}
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+                <div className="work-caption">
+                  <h3>{piece.name}</h3>
+                  <span className="work-price">
+                    {piece.original ? "" : "from "}
+                    {formatPrice(piece.basePriceCents)}
+                  </span>
+                </div>
+                <p className="work-kind">{piece.kind}</p>
               </Link>
             </Reveal>
           ))}
