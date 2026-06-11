@@ -158,7 +158,10 @@ export default function Home() {
           {ORIGINALS.map((piece) => (
             <Reveal as="li" key={piece.slug} className="original-card">
               <span className="badge">One of one</span>
-              <Link href={`/havn-goods/${piece.slug}`} className="work-card">
+              <Link
+                href={`/havn-goods/${piece.slug}`}
+                className="work-card work-card--wide"
+              >
                 <Image
                   src={piece.image.src}
                   alt={piece.image.alt}

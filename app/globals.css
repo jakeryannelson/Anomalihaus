@@ -399,6 +399,13 @@ p {
   opacity: 0.92;
 }
 
+/* The originals are landscape works — they get a wide frame that
+   shows them whole. They always pair up in their own row, so each
+   row of the grid stays internally symmetric. */
+.work-card--wide img {
+  aspect-ratio: 7 / 5;
+}
+
 .work-caption {
   display: flex;
   justify-content: space-between;
