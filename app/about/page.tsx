@@ -85,6 +85,47 @@ export default function About() {
               <h1 style={{ marginTop: "var(--s-2)" }}>
                 A haus for anomalies.
               </h1>
+              <figure className="anomaly-figure">
+                <svg
+                  viewBox="0 0 400 220"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="A grid of identical gray dots with a single green rune among them — the anomaly"
+                >
+                  {/* 9 × 5 field of identical marks… */}
+                  {Array.from({ length: 45 }).map((_, i) => {
+                    const col = i % 9;
+                    const row = Math.floor(i / 9);
+                    // …except one.
+                    if (col === 5 && row === 2) return null;
+                    return (
+                      <circle
+                        key={i}
+                        cx={28 + col * 43}
+                        cy={26 + row * 42}
+                        r="4.5"
+                        fill="#4E626C"
+                        opacity="0.32"
+                      />
+                    );
+                  })}
+                  {/* The anomaly: ansuz, in moss, slightly off-axis. */}
+                  <g
+                    transform="rotate(-9 243 110)"
+                    stroke="#3F5436"
+                    strokeWidth="5"
+                    strokeLinecap="square"
+                    fill="none"
+                  >
+                    <path d="M236 92 L236 130" />
+                    <path d="M236 97 L254 110" />
+                    <path d="M236 112 L254 125" />
+                  </g>
+                </svg>
+                <figcaption className="anomaly-caption">
+                  The anomaly is the point.
+                </figcaption>
+              </figure>
             </div>
             <div className="split-body">
               <p className="lede">
@@ -194,22 +235,37 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section container">
-        <div className="split">
+      <section className="section container" aria-labelledby="made-it-out">
+        <div className="section-head">
           <div>
-            <p className="kicker">Start somewhere</p>
-            <h2 style={{ marginTop: "var(--s-2)" }}>See what made it out.</h2>
+            <p className="kicker">From the haus</p>
+            <h2 id="made-it-out">A few that made it out.</h2>
           </div>
-          <div className="split-body">
-            <p className="muted">
-              Nine pieces are in the haus right now — seven prints, two
-              one-of-one originals.
-            </p>
-            <Link href="/havn-goods" className="button">
-              See the work
-            </Link>
-          </div>
+          <Link href="/havn-goods" className="section-head-link">
+            All nine pieces →
+          </Link>
         </div>
+        <ul className="mini-grid">
+          {["the-ego-death", "the-foundation", "light-in-the-labyrinth", "the-fertile-ashes"].map(
+            (slug) => {
+              const piece = getPiece(slug)!;
+              return (
+                <Reveal as="li" key={slug}>
+                  <Link href={`/havn-goods/${slug}`}>
+                    <Image
+                      src={piece.image.src}
+                      alt={piece.image.alt}
+                      width={piece.image.width}
+                      height={piece.image.height}
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                    />
+                    <p className="mini-name">{piece.name}</p>
+                  </Link>
+                </Reveal>
+              );
+            }
+          )}
+        </ul>
       </section>
     </>
   );
