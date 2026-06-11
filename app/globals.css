@@ -552,6 +552,25 @@ p {
   text-transform: uppercase;
 }
 
+/* ── The anomaly grid — a field of identical marks, one that isn't.
+       The whole thesis, drawn. Sits under the About headline. ── */
+.anomaly-figure {
+  margin-top: var(--s-5);
+  max-width: 400px;
+}
+
+.anomaly-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.anomaly-caption {
+  margin-top: var(--s-2);
+  font-size: var(--text-xs);
+  color: var(--fjord);
+}
+
 /* ── About opener + falling leaves — palette tones drifting slowly
        behind the type. Decorative only; gone under reduced motion. ── */
 .about-hero {
@@ -1127,10 +1146,58 @@ p {
   color: color-mix(in srgb, var(--ink) 85%, var(--fjord));
 }
 
-/* ── Footer — CTA band, then a three-column grid on the same
-       container as everything above it. ── */
+/* ── Mini gallery — a quiet row of pieces used as a page closer. ── */
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
+  list-style: none;
+  padding: 0;
+}
+
+.mini-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--hairline);
+  background: var(--bone-deep);
+  transition: opacity 240ms ease-out;
+}
+
+.mini-grid a:hover img {
+  opacity: 0.92;
+}
+
+.mini-grid a {
+  display: block;
+  text-decoration: none;
+}
+
+.mini-name {
+  margin-top: var(--s-1);
+  font-size: var(--text-xs);
+  color: var(--fjord);
+}
+
+@media (max-width: 640px) {
+  .mini-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Footer — palette stripe, CTA band, then a three-column grid
+       on the same container as everything above it. ── */
+.palette-stripe {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 6px;
+}
+
+.palette-stripe span {
+  display: block;
+}
+
 .footer-cta {
-  border-top: 1px solid var(--hairline);
   background: var(--bone-deep);
 }
 
