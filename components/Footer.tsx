@@ -5,6 +5,18 @@ export default function Footer() {
     <>
       <section className="footer-cta" aria-labelledby="footer-cta-h">
         <div className="container footer-cta-inner">
+          <svg
+            className="footer-rune"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            fill="none"
+          >
+            <g stroke="currentColor" strokeWidth="6" strokeLinecap="square">
+              <path d="M24 10 L24 54" />
+              <path d="M24 16 L44 30" />
+              <path d="M24 32 L44 46" />
+            </g>
+          </svg>
           <p className="kicker">Havn Goods</p>
           <h2 id="footer-cta-h">
             Your walls talk. Give them something true to say.
