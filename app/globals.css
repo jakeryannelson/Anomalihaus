@@ -552,6 +552,208 @@ p {
   text-transform: uppercase;
 }
 
+/* ── About opener + falling leaves — palette tones drifting slowly
+       behind the type. Decorative only; gone under reduced motion. ── */
+.about-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.leaf {
+  position: absolute;
+  top: -28px;
+  width: calc(13px * var(--s, 1));
+  height: calc(13px * var(--s, 1));
+  border-radius: 0 62% 0 62%;
+  opacity: 0;
+  animation: leaf-fall var(--dur, 18s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: var(--o, 0.4);
+  }
+  50% {
+    transform: translate(var(--sway, 30px), 46vh) rotate(150deg);
+    opacity: var(--o, 0.4);
+  }
+  98% {
+    opacity: var(--o, 0.4);
+  }
+  100% {
+    transform: translate(calc(var(--sway, 30px) * -0.5), 96vh) rotate(310deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaves {
+    display: none;
+  }
+}
+
+/* ── Cart ── */
+.cart-lines {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto auto;
+  gap: var(--s-3);
+  align-items: center;
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.cart-thumb img {
+  width: 96px;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid var(--hairline);
+  background: var(--bone-deep);
+}
+
+.cart-info {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+}
+
+.cart-info h3 {
+  font-size: var(--text-h3);
+  font-weight: 500;
+}
+
+.cart-info h3 a {
+  text-decoration: none;
+}
+
+.cart-variant {
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+.cart-remove {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-xs);
+  color: var(--fjord);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.cart-remove:hover {
+  color: var(--ink);
+}
+
+.cart-qty {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.cart-qty .variant-option {
+  padding: 0.3em 0.75em;
+}
+
+.cart-qty-value {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 500;
+}
+
+.cart-line-total {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 480;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.cart-summary {
+  margin-top: var(--s-4);
+  margin-left: auto;
+  max-width: 22rem;
+  display: grid;
+  gap: var(--s-2);
+  justify-items: end;
+  text-align: right;
+}
+
+.cart-subtotal {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+
+/* Purchase action pair on product pages */
+.purchase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  justify-content: flex-end;
+}
+
+.purchase-added {
+  font-size: var(--text-s);
+  color: var(--moss);
+}
+
+/* Placeholder copy awaiting the artist's words */
+.placeholder {
+  border: 1px dashed color-mix(in srgb, var(--ink) 30%, transparent);
+  border-radius: var(--radius);
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+@media (max-width: 640px) {
+  .cart-line {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .cart-thumb img {
+    width: 72px;
+    height: 90px;
+  }
+
+  .cart-qty,
+  .cart-line-total {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .cart-summary {
+    max-width: none;
+    justify-items: start;
+    text-align: left;
+  }
+}
+
 /* ── Photo band — full-bleed Nordic interlude. ── */
 .photo-band {
   position: relative;

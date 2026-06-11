@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Schibsted_Grotesk } from "next/font/google";
+import CartProvider from "@/components/CartProvider";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -39,9 +40,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${schibsted.variable}`}>
       <body>
-        <Nav />
-        <main id="main">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Nav />
+          <main id="main">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
