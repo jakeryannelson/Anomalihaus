@@ -31,7 +31,9 @@ export default function Home() {
         />
         <div className="hero-mark container">
           <p className="kicker">Atlanta art collective · named for the north</p>
-          <p aria-hidden="true">anomalihaus</p>
+          <p className="hero-word" aria-hidden="true">
+            anomalihaus
+          </p>
         </div>
       </section>
 

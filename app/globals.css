@@ -292,7 +292,7 @@ p {
   pointer-events: none;
 }
 
-.hero-mark p {
+.hero-word {
   max-width: none;
   font-family: var(--font-display);
   font-size: var(--text-hero);
