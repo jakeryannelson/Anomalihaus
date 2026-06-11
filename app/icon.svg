@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- ansuz rune, hand-set: the first mark of the haus -->
+  <rect width="64" height="64" fill="#faf8f4"/>
+  <g stroke="#16181a" stroke-width="6" stroke-linecap="square" fill="none">
+    <path d="M24 10 L24 54"/>
+    <path d="M24 16 L44 30"/>
+    <path d="M24 32 L44 46"/>
+  </g>
+</svg>

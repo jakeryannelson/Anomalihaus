@@ -1,0 +1,706 @@
+/* ============================================================
+   anomalihaus — design system
+   Scandinavian editorial: warm paper, near-black ink, one fjord,
+   one moss. Typography does the work; whitespace is a material.
+   ============================================================ */
+
+:root {
+  /* ── Color ──────────────────────────────────────────────────
+     bone   warm paper ground — gallery wall, not screen-white
+     ink    near-black with a cool cast — never #000
+     fjord  the old site's slate blue, demoted from background
+            to supporting voice: captions, rules, secondary text
+     moss   from Seeds of Life and the vines in The Fertile Ashes:
+            links, actions, focus. The only loud thing here.    */
+  --bone: #faf8f4;
+  --ink: #16181a;
+  --fjord: #4e626c;
+  --moss: #3f5436;
+
+  --hairline: color-mix(in srgb, var(--ink) 13%, transparent);
+  --bone-deep: #f1ede6; /* recessed panels: FAQ, footer */
+
+  /* ── Type ──────────────────────────────────────────────────
+     Fraunces carries the display voice (slightly strange, like
+     the name). Schibsted Grotesk carries the reading voice.
+     Fluid scale, ratio ≈ 1.25, anchored at 17–19px body.      */
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-text: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-s: 0.9375rem;
+  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.8vw, 1.625rem);
+  --text-h2: clamp(1.625rem, 1.35rem + 1.4vw, 2.375rem);
+  --text-h1: clamp(2.25rem, 1.7rem + 2.8vw, 4rem);
+  --text-hero: clamp(2.75rem, 1.5rem + 7vw, 7.5rem);
+
+  /* ── Space ── 8px base, sections breathe ── */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4.5rem;
+  --s-7: 6rem;
+  --section: clamp(4rem, 9vw, 8rem);
+
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 2px;
+}
+
+/* ── Reset & base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, var(--ink) 35%, transparent);
+  transition: text-decoration-color 160ms ease-out;
+}
+
+a:hover {
+  text-decoration-color: var(--moss);
+}
+
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+::selection {
+  background: var(--moss);
+  color: var(--bone);
+}
+
+/* ── Typography ── */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 480;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+p {
+  max-width: 65ch;
+}
+
+.kicker {
+  font-family: var(--font-text);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fjord);
+}
+
+.lede {
+  font-size: var(--text-h3);
+  line-height: 1.45;
+  font-weight: 380;
+}
+
+.muted {
+  color: var(--fjord);
+}
+
+.small {
+  font-size: var(--text-s);
+}
+
+/* ── Layout primitives ── */
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.stack > * + * {
+  margin-top: var(--s-3);
+}
+
+/* ── Nav — a name and four words. Nothing else earned a place. ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bone) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-block: var(--s-2);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 540;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.wordmark-dot {
+  color: var(--moss);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3);
+  list-style: none;
+  padding: 0;
+  font-size: var(--text-s);
+}
+
+.nav-links a {
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--moss);
+}
+
+/* ── Buttons — flat ink, inverts on hover. No shadows, ever. ── */
+.button {
+  display: inline-block;
+  padding: 0.8em 1.6em;
+  background: var(--ink);
+  color: var(--bone);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  font-family: var(--font-text);
+  font-size: var(--text-s);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 160ms ease-out, color 160ms ease-out;
+}
+
+.button:hover {
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.button--quiet {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hairline);
+}
+
+.button--quiet:hover {
+  border-color: var(--ink);
+}
+
+/* ── Hero — the one place the grid breaks on purpose:
+       an oversized wordmark laid across the artwork itself. ── */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hero-media {
+  position: relative;
+  height: min(78vh, 760px);
+}
+
+.hero-media img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* The wordmark deliberately bridges the artwork and the page —
+   half on the image, half on the paper. The one planned breach. */
+.hero-title {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.45em;
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-align: center;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.hero-under {
+  padding-block: var(--s-6) var(--s-7);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-5);
+  align-items: end;
+}
+
+.hero-statement {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 460;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.hero-aside {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+/* ── Shop grid — two columns, staggered like pieces leaned
+       against a studio wall, not a product shelf. ── */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-7) var(--s-5);
+  list-style: none;
+  padding: 0;
+}
+
+.work-grid > li:nth-child(even) {
+  transform: translateY(var(--s-6));
+}
+
+.work-grid:has(> li:nth-child(even)) {
+  padding-bottom: var(--s-6);
+}
+
+.work-card {
+  display: block;
+  text-decoration: none;
+}
+
+.work-card figure {
+  background: var(--bone-deep);
+  border: 1px solid var(--hairline);
+}
+
+.work-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: opacity 240ms ease-out;
+}
+
+.work-card:hover img {
+  opacity: 0.93;
+}
+
+.work-card figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding-top: var(--s-2);
+}
+
+.work-card h3 {
+  font-size: var(--text-h3);
+  font-weight: 500;
+}
+
+.work-price {
+  font-size: var(--text-s);
+  color: var(--fjord);
+  white-space: nowrap;
+}
+
+.work-kind {
+  margin-top: 0.25rem;
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+/* Collection tabs */
+.collection-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-s);
+}
+
+.collection-nav a {
+  text-decoration: none;
+  color: var(--fjord);
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid transparent;
+}
+
+.collection-nav a:hover {
+  color: var(--ink);
+}
+
+.collection-nav a[aria-current="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--moss);
+}
+
+.empty-state {
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ── Product page — image breaks out of the grid to the left;
+       the words keep to their column. Asymmetry with intent. ── */
+.product {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.product-media {
+  margin-left: calc(var(--gutter) * -1);
+}
+
+.product-media img {
+  width: 100%;
+  border: 1px solid var(--hairline);
+}
+
+.product-details {
+  position: sticky;
+  top: calc(var(--s-6) + 1rem);
+  display: grid;
+  gap: var(--s-3);
+}
+
+.product-note {
+  border-left: 2px solid var(--moss);
+  padding-left: var(--s-3);
+  color: color-mix(in srgb, var(--ink) 88%, var(--fjord));
+}
+
+/* Purchase UI */
+.purchase {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.variant-group {
+  border: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-1);
+}
+
+.variant-label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fjord);
+  padding: 0;
+}
+
+.variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.variant-option {
+  padding: 0.55em 1em;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  font-family: var(--font-text);
+  font-size: var(--text-s);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 160ms ease-out, background 160ms ease-out,
+    color 160ms ease-out;
+}
+
+.variant-option:hover {
+  border-color: var(--ink);
+}
+
+.variant-option.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bone);
+}
+
+.purchase-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
+}
+
+.purchase-price {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 480;
+}
+
+.purchase-error {
+  color: #8c2f1d;
+  font-size: var(--text-s);
+}
+
+.purchase-fine {
+  font-size: var(--text-xs);
+  color: var(--fjord);
+}
+
+/* ── Donate ── */
+.donate {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.donate-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.donate-custom {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.donate-custom-field {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.3em;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+}
+
+.donate-custom-field input {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  width: 7ch;
+  outline: none;
+}
+
+.donate-fee {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: var(--text-s);
+  color: var(--fjord);
+  cursor: pointer;
+}
+
+.donate-fee input {
+  accent-color: var(--moss);
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── FAQ ── */
+.faq {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--hairline);
+  padding-block: var(--s-2);
+}
+
+.faq summary {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 480;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  font-family: var(--font-text);
+  color: var(--fjord);
+  transition: transform 200ms ease-out;
+}
+
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq details p {
+  padding-top: var(--s-2);
+  color: color-mix(in srgb, var(--ink) 85%, var(--fjord));
+}
+
+/* ── Footer — a year and a name, as promised. ── */
+.footer {
+  margin-top: var(--section);
+  border-top: 1px solid var(--hairline);
+  background: var(--bone-deep);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-4);
+  font-size: var(--text-s);
+  color: var(--fjord);
+}
+
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--ink);
+}
+
+/* ── Reveal — fade in once, 12px rise, 320ms. Nothing performative. ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 320ms ease-out, transform 320ms ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Mobile — same consideration, one column. ── */
+@media (max-width: 760px) {
+  .hero-grid,
+  .product {
+    grid-template-columns: 1fr;
+  }
+
+  .product-media {
+    margin-right: calc(var(--gutter) * -1);
+  }
+
+  .product-details {
+    position: static;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
+  }
+
+  .work-grid > li:nth-child(even) {
+    transform: none;
+  }
+
+  .work-grid:has(> li:nth-child(even)) {
+    padding-bottom: 0;
+  }
+
+  .hero-media {
+    height: 56vh;
+  }
+
+  .nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-1);
+  }
+}
