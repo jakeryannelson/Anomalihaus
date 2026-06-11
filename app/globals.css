@@ -545,6 +545,92 @@ p {
   text-transform: uppercase;
 }
 
+/* ── Photo band — full-bleed Nordic interlude. ── */
+.photo-band {
+  position: relative;
+  height: clamp(320px, 52vh, 560px);
+  border-block: 1px solid var(--hairline);
+}
+
+.photo-band img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.photo-caption {
+  padding-top: var(--s-2);
+  font-size: var(--text-xs);
+  color: var(--fjord);
+}
+
+/* ── Palette — flat color fields sampled from the work.
+       The one place the site gets loud, and even here it's flat. ── */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--s-3) var(--s-2);
+  list-style: none;
+  padding: 0;
+}
+
+.swatch {
+  display: block;
+  text-decoration: none;
+}
+
+.swatch-chip {
+  aspect-ratio: 3 / 4;
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border-radius: var(--radius);
+  transition: transform 200ms ease-out;
+}
+
+.swatch:hover .swatch-chip {
+  transform: translateY(-4px);
+}
+
+.swatch-name {
+  margin-top: var(--s-1);
+  font-size: var(--text-s);
+  font-weight: 500;
+}
+
+.swatch-source {
+  font-size: var(--text-xs);
+  color: var(--fjord);
+}
+
+/* ── Founder band — quote and the work, side by side. ── */
+.founder-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-6);
+  align-items: center;
+}
+
+.founder-grid img {
+  width: 100%;
+  border: 1px solid var(--hairline);
+  background: var(--bone);
+}
+
+@media (max-width: 880px) {
+  .palette {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .palette {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .founder-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── Pull-quote band — his words, set huge. ── */
 .invocation-band {
   background: var(--bone-deep);
