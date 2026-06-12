@@ -552,8 +552,43 @@ p {
   text-transform: uppercase;
 }
 
-/* ── The anomaly grid — a field of identical marks, one that isn't.
-       The whole thesis, drawn. Sits under the About headline. ── */
+/* ── About opener — a true spread: words left, the rune wheel as
+       a centered instrument right, both on a 50/50 grid. ── */
+.about-opener {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-5) var(--s-7);
+  align-items: center;
+}
+
+.about-opener-text {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 34rem;
+}
+
+.about-wheel {
+  justify-self: center;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+}
+
+.about-wheel .anomaly-caption {
+  text-align: center;
+  margin-top: var(--s-3);
+}
+
+@media (max-width: 880px) {
+  .about-opener {
+    grid-template-columns: 1fr;
+  }
+
+  .about-wheel {
+    max-width: 360px;
+  }
+}
+
 .anomaly-figure {
   margin-top: var(--s-5);
   max-width: 400px;
