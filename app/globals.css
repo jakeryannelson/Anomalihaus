@@ -1260,14 +1260,16 @@ p {
   padding-block: var(--s-7);
   display: grid;
   gap: var(--s-4);
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
 }
 
-/* The haus mark, ghosted — fills the panel without making noise. */
+/* The haus mark, ghosted — centered behind the words. */
 .footer-rune {
   position: absolute;
-  right: var(--gutter);
+  left: 50%;
   bottom: -2rem;
+  transform: translateX(-50%);
   width: clamp(180px, 24vw, 320px);
   height: auto;
   color: var(--ink);
@@ -1277,7 +1279,8 @@ p {
 
 .footer-cta h2 {
   font-size: var(--text-h1);
-  max-width: 16ch;
+  max-width: 18ch;
+  margin-inline: auto;
 }
 
 .footer {
