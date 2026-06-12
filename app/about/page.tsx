@@ -200,13 +200,6 @@ export default function About() {
           sizes="100vw"
         />
       </div>
-      <div className="container">
-        <p className="photo-caption">
-          Bryggen, Bergen. The names are Norse because the north knows long
-          winters — and what follows them.
-        </p>
-      </div>
-
       {/* The palette, with receipts */}
       <section className="section container" aria-labelledby="palette">
         <div className="section-head">
