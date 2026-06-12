@@ -107,13 +107,32 @@ export default function About() {
           ))}
         </div>
         <div className="container section about-hero-inner">
-          <div className="split">
-            <div>
-              <p className="kicker">About</p>
-              <h1 style={{ marginTop: "var(--s-2)" }}>
-                A haus for anomalies.
-              </h1>
-              <figure className="anomaly-figure">
+          <div className="about-opener">
+            <div className="about-opener-text">
+              <div>
+                <p className="kicker">About</p>
+                <h1 style={{ marginTop: "var(--s-2)" }}>
+                  A haus for anomalies.
+                </h1>
+              </div>
+              <p className="lede">
+                anomalihaus is an art collective built around one conviction:
+                the things that don&rsquo;t fit are the things worth keeping.
+              </p>
+              <p>
+                We make original abstract works, dimensional wall pieces,
+                preserved moss, and objects for people who want their walls
+                to say something true. The work deals in transformation — ego
+                death, mourning, rebirth, the bridge between who you were and
+                who you&rsquo;re becoming.
+              </p>
+              <p>
+                The haus is in Atlanta, and it is built to grow:
+                collaborators, makers, photographers, and strays are welcome
+                — <Link href="/contact">write to us</Link>.
+              </p>
+            </div>
+            <figure className="anomaly-figure about-wheel">
                 <svg
                   viewBox="0 0 400 400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -167,26 +186,7 @@ export default function About() {
                   anomalihaus, in the old letters. One rune runs moss — the
                   anomaly is the point.
                 </figcaption>
-              </figure>
-            </div>
-            <div className="split-body">
-              <p className="lede">
-                anomalihaus is an art collective built around one conviction:
-                the things that don&rsquo;t fit are the things worth keeping.
-              </p>
-              <p>
-                We make original abstract works, dimensional wall pieces,
-                preserved moss, and objects for people who want their walls
-                to say something true. The work deals in transformation — ego
-                death, mourning, rebirth, the bridge between who you were and
-                who you&rsquo;re becoming.
-              </p>
-              <p>
-                The haus is in Atlanta, and it is built to grow:
-                collaborators, makers, photographers, and strays are welcome
-                — <Link href="/contact">write to us</Link>.
-              </p>
-            </div>
+            </figure>
           </div>
         </div>
       </section>
